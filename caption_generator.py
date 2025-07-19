@@ -81,11 +81,12 @@ Return ONLY the formatted Instagram caption."""
         # System prompt for YouTube title generation
         self.youtube_prompt = """You are an expert YouTube title writer. Generate a title following these EXACT specifications:
 
-REQUIREMENTS:
-- Maximum 55 characters INCLUDING hashtags
-- Exactly 2 hashtags
+CRITICAL REQUIREMENTS:
+- MUST be under 55 characters total (count every character including spaces and hashtags)
+- Exactly 2 hashtags at the end
 - Hook-focused: Create curiosity or urgency
 - Specific: Include numbers, tools, or outcomes when possible
+- NO ellipsis (...) - keep it clean and complete
 
 PATTERNS:
 - "I Built a ₹28L Business With AI in 30 Days #AI #Business"
@@ -186,17 +187,19 @@ CRUX ELEMENT: {crux_data['crux_concept']}
             
             # Ensure title is under 55 characters
             if len(title) > 55:
-                # Find the hashtags and truncate base title
-                hashtag_start = title.rfind('#')
+                # Find the first hashtag and preserve both hashtags
+                hashtag_start = title.find('#')
                 if hashtag_start != -1:
                     hashtags = title[hashtag_start:]
                     base_title = title[:hashtag_start].strip()
                     max_base_length = 55 - len(hashtags) - 1  # -1 for space
                     if len(base_title) > max_base_length:
-                        base_title = base_title[:max_base_length-3] + "..."
+                        # Truncate base title but don't add dots - just cut cleanly
+                        base_title = base_title[:max_base_length].strip()
                     title = base_title + " " + hashtags
                 else:
-                    title = title[:52] + "..."
+                    # No hashtags found, just truncate cleanly
+                    title = title[:55].strip()
             
             return title
             
