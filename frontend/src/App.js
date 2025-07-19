@@ -16,7 +16,7 @@ import {
 import axios from 'axios';
 
 const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? '' // Use relative URLs in production (same domain)
+  ? 'https://captionsgen-production.up.railway.app' // Railway backend
   : (process.env.REACT_APP_API_URL || 'http://localhost:5001');
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
     setResult(null);
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/generate`, {
+      const response = await axios.post(`${API_BASE_URL}/generate`, {
         script: script.trim()
       });
 
