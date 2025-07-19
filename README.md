@@ -1,123 +1,48 @@
-# Instagram Caption & YouTube Title Generator
+# Caption Generator Backend API
 
-A Python 3 application that generates Instagram captions and YouTube titles from video script inputs using Claude API (Sonnet 4) for dynamic, niche-adaptive content processing.
+AI-powered caption and title generator using Anthropic Claude.
 
-## Features
+## 🚀 Quick Deploy
 
-- **Dynamic Crux Identification**: Uses Claude API to identify specific tools, concepts, or unique angles from any niche
-- **Prompt-Based Processing**: No fixed pillars - adapts to any content type or niche
-- **Instagram Caption Generation**: 150-300 words with proper formatting, keywords, and hashtags
-- **YouTube Title Generation**: Under 55 characters with exactly 2 hashtags
-- **Niche Agnostic**: Works with any type of content (business, psychology, tech, etc.)
+### Railway (Recommended)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/railway-template)
 
-## Installation
+1. Click Railway button above
+2. Connect your GitHub account and select this repo
+3. Set environment variable: `ANTHROPIC_API_KEY`
+4. Deploy!
 
-1. Install dependencies:
+### Render
+1. Go to [render.com](https://render.com)
+2. Create new Web Service from GitHub
+3. Select this repository and branch: `backend`
+4. Settings:
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `gunicorn app:app`
+   - Environment Variable: `ANTHROPIC_API_KEY`
+
+### Heroku
 ```bash
+heroku create your-app-name
+heroku config:set ANTHROPIC_API_KEY=your_key
+git push heroku backend:main
+```
+
+## 📋 API Endpoints
+
+- `GET /health` - Health check
+- `POST /generate` - Generate Instagram caption and YouTube title
+- `POST /analyze-crux` - Analyze script crux element
+
+## 🔧 Environment Variables
+
+- `ANTHROPIC_API_KEY` - Your Anthropic API key (required)
+- `PORT` - Port number (auto-set by hosting platforms)
+
+## 🏃 Local Development
+
+```bash
+export ANTHROPIC_API_KEY=your_key
 pip install -r requirements.txt
+python app.py
 ```
-
-2. Set your Anthropic API key:
-```bash
-export ANTHROPIC_API_KEY='your-api-key-here'
-```
-
-## Usage
-
-### Basic Usage
-
-```python
-from caption_generator import CaptionGenerator
-
-# Initialize generator
-generator = CaptionGenerator()
-
-# Generate content from script
-script = "Your video script text here..."
-result = generator.generate_content(script)
-
-print("Instagram Caption:")
-print(result["instagram_caption"])
-
-print("YouTube Title:")
-print(result["youtube_title"])
-```
-
-### With Custom API Key
-
-```python
-generator = CaptionGenerator(api_key="your-api-key")
-```
-
-## Testing
-
-Run the test script to validate functionality:
-
-```bash
-python test_generator.py
-```
-
-This will test the generator with the provided example scripts and validate:
-- Crux identification accuracy
-- Instagram caption formatting
-- YouTube title character limits
-- Hashtag requirements
-
-## Output Format
-
-The generator returns a dictionary with:
-
-```python
-{
-    "instagram_caption": "Full formatted caption with crux definition start, bridge paragraph, CTA, [keywords], and #hashtags",
-    "youtube_title": "Title Under 55 Chars #Tag #Tag"
-}
-```
-
-## Instagram Caption Structure
-
-1. **Hook Paragraph (2-3 sentences)**: Starts with crux definition
-2. **Connection Paragraph (3-4 sentences)**: Bridges crux to main message
-3. **Call-to-Action (1 sentence)**: Actionable, relevant CTA
-4. **Keywords**: [10 keywords, comma-separated]
-5. **Hashtags**: 15 relevant hashtags
-
-## YouTube Title Requirements
-
-- Maximum 55 characters including hashtags
-- Exactly 2 hashtags
-- Hook-focused for curiosity/urgency
-- Specific numbers or outcomes when possible
-
-## Crux Identification
-
-The system identifies specific, tangible elements from scripts:
-- Specific tools (Apollo, Cursor AI, etc.)
-- Specific methods (Dale Carnegie method, etc.)
-- Specific concepts (Algorithm, Web scraping, etc.)
-- Technical frameworks mentioned
-
-**NOT** the main theme - focuses on supporting elements that can be defined independently.
-
-## API Requirements
-
-- Anthropic API key with access to Claude 3.5 Sonnet
-- Internet connection for API calls
-- JSON response parsing capability
-
-## Error Handling
-
-The application includes comprehensive error handling for:
-- Missing API keys
-- Invalid scripts
-- API failures
-- JSON parsing errors
-- Character limit violations
-
-## Dependencies
-
-- `anthropic>=0.34.0` - Claude API client
-
-## License
-
-This project follows the specifications provided in the attached .md file for Instagram caption and YouTube title generation.
