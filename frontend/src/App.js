@@ -188,7 +188,7 @@ function App() {
                 </div>
 
                 {/* YouTube Title */}
-                <div className="result-card">
+                <div className="result-card w-full">
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <Youtube className="w-6 h-6 text-red-400" />
@@ -202,8 +202,8 @@ function App() {
                     </button>
                   </div>
                   
-                  <div className="bg-black bg-opacity-20 rounded-lg p-4 mb-4">
-                    <div className="text-white text-lg font-medium">
+                  <div className="bg-black bg-opacity-20 rounded-lg p-4 mb-4 w-full overflow-visible">
+                    <div className="text-white text-lg font-medium break-words whitespace-normal w-full overflow-visible text-left">
                       {result.youtube_title}
                     </div>
                   </div>
